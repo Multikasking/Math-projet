@@ -44,8 +44,9 @@ def animate(i):
     y.append(y1[i])
     circle.set_center([x[i],y[i]])
     line.set_data([0, x[i]], [0, y[i]])
-    plt.plot(x,y, scaley=True, scalex=True, color="blue",linestyle="-")
-anim=animation.FuncAnimation(fig=fig,func=animate,interval=1)
+    #plt.plot(x,y, scaley=True, scalex=True, color="blue",linestyle="-")
+anim=animation.FuncAnimation(fig=fig,func=animate,interval=25)
+anim.save("pen.gif",writer="pillow",fps=25)
 
 
 
