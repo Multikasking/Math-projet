@@ -11,7 +11,7 @@ plt.style.use("dark_background")
 def dthetadt(t,S):
     t,omega=S
     g,l=9.81,1
-    b=100
+    b=1
     m=100
     return [omega,-b/m*omega -g/l*np.sin(t)]
 L=1
