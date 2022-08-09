@@ -1,0 +1,34 @@
+import numpy as np
+import random as rdn
+import matplotlib.pyplot as plt
+#Mandelbrot
+plt.style.use('dark_background')
+def mandelbrot(h_range,w_range,itemax):
+    y, x =np.ogrid[-1.8: 1.8: h_range*1j, -1.8: 1: w_range*1j]# va me prendre h_range valeur entre -1.4 et 1.4 et w.range valeurs entre -1.8,1.8
+    a_array = x + y*1j
+    z_array = np.zeros(a_array.shape) #retourne un nouvelle array de même forme que a rempli de 0
+    iteration_avant_diverge=itemax+np.zeros(a_array.shape)#va faire un array rempli de itemax
+    for h in range(h_range):#pour chaque h le procédé va être fait w fois
+            for w in range(w_range):
+               z = z_array[h][w]#z va prendre les valeur de h et w
+               a=a_array[h][w]#va prendre le hieme et wieme element dans chaque array
+               for _ in range (itemax):
+                        z=z**2+a
+                        if abs((np.real(z)**2+np.imag(z)**2)**0.5)>2:
+                            iteration_avant_diverge[h][w]=_
+                            break 
+
+        
+    return iteration_avant_diverge
+a=mandelbrot(1800,1800,100)    
+plt.imshow(a, cmap='twilight_shifted')
+plt.axis('off')
+plt.show()
+plt.close()
+#range to try: y=0.1102: 0.1107 x=-0.7463:  -0.7458
+
+#R=0.026
+#y, x = np.ogrid[1.0405-R:  1.0405+R: h_range*1j,  -0.16-R:  -0.16+R: w_range*1j]
+#R=0.019
+#y, x = np.ogrid[0.246-R:  0.246+R: h_range*1j,   -0.722-R:   -0.722+R: w_range*1j] 
+
