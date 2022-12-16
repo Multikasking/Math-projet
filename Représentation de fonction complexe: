@@ -1,17 +1,29 @@
 import numpy as np 
 import math as m
 import matplotlib.pyplot as plt
+from scipy.special import gamma
 fig, (ax1,ax2) = plt.subplots(1, 2,figsize=(10,5))
 
 def f(x,y):
     z=x+y*1j
-    return np.log(z)
+    return gamma(z)
+def zeta(x,y):
+    z=x+y*1j
+    s=0
+    a=1
+    while a<=1000:
+        s+=1/a**z
+        a+=1
+    return s
+        
+        
 a=np.pi
 b=np.pi
 x=np.arange(-a,a,0.1)
 y=np.arange(-b,b,0.1)
 u,v=np.meshgrid(x,y) #crée nos arret x et y pour la fonction
 z=f(u,v)
+zet=zeta(u,v)
 fx=np.sqrt(u**2+v**2)
 ax1.pcolormesh(x,y,fx)
 
@@ -32,5 +44,10 @@ ax2.scatter(real, imag, s=7,c=fx,edgecolor='k', linewidths=0.01)
 ax2.set_xlim(-a,a)
 ax2.set_ylim(-b,b)
 ax2.set_ylabel('Imaginary')
-ax2.set_xlabel('Real')
+ax2.set_xlabel('Real')# les couleurs présentent sur le premièr graphe sont représenté sur le deuxième graphe 
 plt.show()
+fig,ax3= plt.subplots(1,figsize=(10,10))
+ax3.scatter(real, imag, s=7,c=fx,edgecolor='k', linewidths=0.01)
+ax2.set_xlim(t1,t)
+ax2.set_ylim(s1,s)
+
