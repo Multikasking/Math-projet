@@ -1,0 +1,45 @@
+import numpy as np 
+import math as m
+import matplotlib.pyplot as plt
+fig, (ax1,ax2) = plt.subplots(1, 2,figsize=(10,5))
+
+def f(z):
+    return np.tanh(z)
+def grid(a,b,n,m):
+    x=np.linspace(-a,a,n)
+    y=np.linspace(-b,b,m)
+    u=np.meshgrid(x,y*1j)
+    grid=u[0]+u[1]
+    return grid
+a=1
+b=1
+n,m=100,100
+grid=grid(a,b,n,m)
+x=np.linspace(-a,a,n)
+y=np.linspace(-b,b,m)
+u=np.meshgrid(x,y*1j)
+
+for k in range(n):
+    for i in range(m):
+        t=f(grid[k][i])
+        grid[k][i]=t
+
+real=grid.real
+imag=grid.imag
+
+t=np.max(real)*1.1
+t1=np.min(real)*1.1
+
+
+s=np.max(imag)*1.1
+s1=np.min(imag)*1.1
+
+fx=np.sqrt(real**2+imag**2) #sert juste a la création d'une base de couleur
+ax1.pcolormesh(real,imag,fx)
+ax2.scatter(real, imag, s=1,c=fx, linewidths=0.001)
+ax2.set_xlim(t1, t)
+ax2.set_ylim(s1, s)
+ax2.set_ylabel('Imaginary')
+ax2.set_xlabel('Real')
+plt.show()
+
