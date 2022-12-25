@@ -1,0 +1,28 @@
+#ici, le procédé va être d'appliquà la fonction complexe en chaque points, d'en calculer la norme et d'attribuer une couleur en fonction de la norme
+import numpy as np 
+import math as m
+import matplotlib.pyplot as plt
+from scipy.special import gamma
+plt.style.use("dark_background")
+def f(x,y):
+    z=x+y*1j
+    return np.cos(z)
+def zeta(x,y):
+    z=x+y*1j
+    s=0
+    a=1
+    while a<=1000:
+        s+=1/a**z
+        a+=1
+    return s
+a=4
+b=4
+x=np.arange(-a,a,0.01)
+y=np.arange(-b,b,0.01)
+u,v=np.meshgrid(x,y)
+z=f(u,v)
+n=np.zeros(z.shape)
+for k in range (len(x)):
+    for t in range (len(y)):
+        n[k][t]=(np.real(z[k][t])**2+np.imag(z[k][t])**2)**0.5
+plt.imshow(n,cmap="jet")
