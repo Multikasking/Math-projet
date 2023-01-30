@@ -1,10 +1,12 @@
+%matplotlib qt
+
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.integrate import odeint
-
-
-from mpl_toolkits import mplot3d
+from mpl_toolkits.mplot3d import Axes3D
+ 
 import matplotlib as mpl
+import matplotlib.animation as anim 
 mpl.rcParams['figure.dpi'] = 300
 
 
@@ -44,14 +46,28 @@ def twobpro(t,S,m1,m2):
 t=np.linspace(0,480,2000)
 sol=odeint(twobpro,S0,t=t,tfirst=True,args=(m1,m2))
 
-
-ax = plt.axes(projection='3d')
+def func(num, dataSet,dataSet1,line,line1):
+    # NOTE: there is no .set_data() for 3 dim data...
+    line.set_data(dataSet[0:2, :num])    
+    line.set_3d_properties(dataSet[2, :num])
+    line1.set_data(dataSet1[0:2, :num])    
+    line1.set_3d_properties(dataSet1[2, :num])
+         
+    return line,line1
+# ax = plt.axes(projection='3d')
 x1=sol.T[0]
 y1=sol.T[1]
 z1=sol.T[2]
 x2=sol.T[3]
 y2=sol.T[4]
 z2=sol.T[5]
-ax.plot3D(x1,y1,z1)
-ax.plot3D(x2,y2,z2)
-    
+# ax.plot3D(x1,y1,z1)
+# ax.plot3D(x2,y2,z2)
+dataSet=np.array([x1,y1,z1])
+dataSet1=np.array([x2,y2,z2])
+fig = plt.figure()
+ax = Axes3D(fig)
+numDataPoints = len(t)
+line = plt.plot(dataSet[0], dataSet[1], dataSet[2], lw=2, c='g')[0]
+line1= plt.plot(dataSet1[0],dataSet1[1],dataSet1[2],lw=2,c="r")[0]
+line_ani = anim.FuncAnimation(fig, func, frames=numDataPoints, fargs=(dataSet,dataSet1,line,line1), interval=1, blit=False)
