@@ -1,0 +1,36 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.integrate import odeint
+#probleme des deux corps 
+G=6.67*10**-11
+#conditions objet 1
+m1=10**24
+r1=np.array([0,0,0])
+v1=np.array([5,10,15])
+#condition masse 2:
+m1=10**23
+r2=np.array([4000,0,0])
+v2=np.array([10,20,30])
+r0=np.concatenate((r1,r2))
+v0=np.concatenate((v1,v2))
+S0=np.concatenate((r0,v0))
+def twobpro(t,S,m1,m2):
+    r1=S[0:3]
+    r2=S[3:6]
+    r=np.linalg.norm(r2-r1)
+    v=S[6:12]
+    dvx1=G*m2*(r2[0]-r1[0])/(r**3)
+    dvx2=G*m1*(r1[0]-r1[0])/(r**3)
+    dvy1=G*m2*(r2[1]-r1[1])/(r**3)
+    dvy2=G*m1*(r1[1]-r2[1])/(r**3)
+    dvz1=G*m2*(r2[2]-r2[1])/(r**3)
+    dvz2=G*m1*(r2[1]-r2[2])/(r**3)
+    
+    return 
+    
+    
+t=np.linspace(0,100,2000)
+a=S0[0:3]
+b=S0[3:6]
+c=b[0]
+d=S0[6:13]
