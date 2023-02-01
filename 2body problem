@@ -1,3 +1,4 @@
+
 %matplotlib qt
 
 import numpy as np
@@ -7,6 +8,8 @@ from mpl_toolkits.mplot3d import Axes3D
  
 import matplotlib as mpl
 import matplotlib.animation as anim 
+plt.style.use("dark_background")
+plt.rcParams['axes.grid'] = True
 mpl.rcParams['figure.dpi'] = 300
 
 
@@ -16,7 +19,7 @@ G=6.67*10**-20
 #conditions objet 1
 m1=10**26
 r1=np.array([0,0,0])
-v1=np.array([5,10,15])
+v1=np.array([10,10,10])
 #condition masse 2:
 m2=10**26
 r2=np.array([3000,100,100])
@@ -43,15 +46,20 @@ def twobpro(t,S,m1,m2):
     dv=np.concatenate((dv1,dv2))
     return np.concatenate((v,dv))
     
-t=np.linspace(0,480,2000)
+t=np.linspace(0,480,1000)
 sol=odeint(twobpro,S0,t=t,tfirst=True,args=(m1,m2))
 
 def func(num, dataSet,dataSet1,line,line1):
     # NOTE: there is no .set_data() for 3 dim data...
+    # point.scatter(dataSet[0][num],dataSet[1][num],dataSet[2][num],s=2,c="b")
     line.set_data(dataSet[0:2, :num])    
-    line.set_3d_properties(dataSet[2, :num])
+    line.set_3d_properties(dataSet[2, :num],"o")
     line1.set_data(dataSet1[0:2, :num])    
     line1.set_3d_properties(dataSet1[2, :num])
+
+
+    
+    
          
     return line,line1
 # ax = plt.axes(projection='3d')
@@ -68,6 +76,9 @@ dataSet1=np.array([x2,y2,z2])
 fig = plt.figure()
 ax = Axes3D(fig)
 numDataPoints = len(t)
-line = plt.plot(dataSet[0], dataSet[1], dataSet[2], lw=2, c='g')[0]
-line1= plt.plot(dataSet1[0],dataSet1[1],dataSet1[2],lw=2,c="r")[0]
+line = plt.plot(dataSet[0], dataSet[1], dataSet[2], lw=0.6, c='b')[0]
+line1= plt.plot(dataSet1[0],dataSet1[1],dataSet1[2],lw=0.6,c="r")[0]
+point=ax
 line_ani = anim.FuncAnimation(fig, func, frames=numDataPoints, fargs=(dataSet,dataSet1,line,line1), interval=1, blit=False)
+line_ani.save(anim.PillowWriter(fps=numDataPoints/6))
+plt.show()
