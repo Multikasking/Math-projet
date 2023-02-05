@@ -80,5 +80,5 @@ line = plt.plot(dataSet[0], dataSet[1], dataSet[2], lw=0.6, c='b')[0]
 line1= plt.plot(dataSet1[0],dataSet1[1],dataSet1[2],lw=0.6,c="r")[0]
 point=ax
 line_ani = anim.FuncAnimation(fig, func, frames=numDataPoints, fargs=(dataSet,dataSet1,line,line1), interval=1, blit=False)
-line_ani.save(anim.PillowWriter(fps=numDataPoints/6))
+line_ani.save("pen.gif",writer="pillow",fps=numDataPoints/6)
 plt.show()
