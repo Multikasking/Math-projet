@@ -82,3 +82,17 @@ point=ax
 line_ani = anim.FuncAnimation(fig, func, frames=numDataPoints, fargs=(dataSet,dataSet1,line,line1), interval=1, blit=False)
 line_ani.save("pen.gif",writer="pillow",fps=numDataPoints/6)
 plt.show()
+
+#trajectoire elliptique:
+#probleme des deux corps 
+#G=6.67*10**-11
+#conditions objet 1
+#m1=1.99*10**30
+#r1=np.array([0,0,0])
+#v1=np.array([0,0,0])
+#condition masse 2:
+#m2=1.496*10**8
+#r2=np.array([1.496*10**8,0,0])
+#v2=np.array([10**-2,10**6,0])
+#r0=np.concatenate((r1,r2))
+#v0=np.concatenate((v1,v2))
