@@ -1,0 +1,45 @@
+%matplotlib qt
+import numpy as np 
+from scipy.integrate import odeint 
+import matplotlib.pyplot as plt 
+import matplotlib.animation as animation
+from matplotlib import cm 
+plt.style.use("dark_background")
+
+plt.figure(dpi=200)
+fig,ax=plt.subplots()
+def Weierstrauss(a,b,n,x):
+    s=0
+    k=0
+    while k<=n:
+        s+=a**k*np.cos(b**k*np.pi*x)
+        k+=1
+    return s
+
+x,y=[],[]
+x1=np.linspace(-0.2,0.2,1000)
+b=0.0
+n=200
+while b<5.0:
+    y1=Weierstrauss(2/3,b,100,x1)
+    b+=0.1
+def animate(i):
+    x1=np.linspace(-0.5,0.5,1000)
+    b=0.0
+    x=x1
+    while b<5.0:
+        y1=Weierstrauss(0.2,b,n,x1)
+        b+=0.1
+        y=y1
+    plt.plot(x,y,lw=0.2)
+line,=ax.plot(x1,Weierstrauss(0.2,b,n,x1),lw=0.2)
+def update (frame):
+    y=Weierstrauss(0.24,b+frame*0.05,n,x1)
+    color=cm.cool(frame/20)
+    line.set_ydata(y)
+    line.set_color(color)
+    return line
+    
+    #plt.plot(x,y, scaley=True, scalex=True, color="blue",linestyle="-")
+anim=animation.FuncAnimation(fig=fig,func=update,frames=200,interval=50,) 
+plt.show()  
